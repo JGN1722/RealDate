@@ -3,7 +3,6 @@ Structure RealDate
   h.l : i.l : s.l
 EndStructure
 
-; TODO update
 Procedure.s Pad(x, n=2)
   If x > 10
     ProcedureReturn Str(x)
