@@ -1,8 +1,9 @@
-﻿Structure RealDate
+Structure RealDate
   y.l : m.l : d.l
   h.l : i.l : s.l
 EndStructure
 
+; TODO update
 Procedure.s Pad(x, n=2)
   If x > 10
     ProcedureReturn Str(x)
@@ -20,9 +21,10 @@ Procedure.s StringOfRealDate(*d.RealDate)
   ProcedureReturn s1$ + " " + s2$
 EndProcedure
 Procedure.b IsLeapYear(y)
-  ProcedureReturn Bool(y % 4 = 0)
+  ProcedureReturn Bool(y % 4 = 0 And (y % 100 <> 0 Or y % 400 = 0))
 EndProcedure
 Procedure.l DaysInMonth(m, y)
+  If m < 0 Or m > 12 : ProcedureReturn 0 : EndIf
   If m = 2
     ProcedureReturn 28 + IsLeapYear(y)
   ElseIf m = 4 Or m = 6 Or m = 9 Or m = 11
@@ -32,6 +34,7 @@ Procedure.l DaysInMonth(m, y)
   EndIf
 EndProcedure
 Procedure.b DayExceedsMonth(d, m, y)
+  If m < 0 Or m > 12 : ProcedureReturn #True : EndIf
   If m = 2
     ProcedureReturn Bool(Not (d < 0 Or (IsLeapYear(y) And d < 29) Or d < 28))
   ElseIf m = 4 Or m = 6 Or m = 9 Or m = 11
@@ -104,10 +107,3 @@ Procedure SubFromDate(*d1.RealDate, *d2.RealDate) ; d1 = d1 - d2
     If *d1\m < 0 : *d1\m + 12 : *d1\y - 1 : EndIf
   EndIf
 EndProcedure
-
-; IDE Options = PureBasic 6.00 LTS (Windows - x86)
-; CursorPosition = 84
-; FirstLine = 75
-; Folding = --
-; EnableXP
-; DPIAware
